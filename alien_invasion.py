@@ -1,10 +1,11 @@
-
 #The pygame module con­tains the functionality we need to make a game
 import pygame
 #we’ll use tools in the sys to exit the game when the player quits
 import sys
 
 from settings import Settings
+
+from ship import Ship
 
 class AlienInvasion:
     """ Overall class to manage assets and behavior """
@@ -19,23 +20,34 @@ class AlienInvasion:
         self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height)) 
         pygame.display.set_caption('Alien Invasion')
 
+        #above we created a screen, now we can create an obj ship from imported class ship
+        self.ship = Ship(self)
+
         # Set the background color.
         self.bg_color = (230, 230, 230)
     
     def run_game(self):
         """ Start the main loop for the game """
         while True:
-            #watch for keyboard and mouse events
-            #function returns a list of events that have taken place since the last time this function was called
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit()
+            self._check_events()
+            self._update_screen()
 
-            # Redraw the screen during each pass through the loop.
-            self.screen.fill(self.settings.bg_color)
+    def _check_events(self):
+        """ Respond to keypresses and mouse events """
+        #watch for keyboard and mouse events
+        #function returns a list of events that have taken place since the last time this function was called
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
 
-            #make the most recently drawn screen visible
-            pygame.display.flip()
+    def _update_screen(self):
+        """ update images on the screen, and flip to the new screen """
+        # Redraw the screen during each pass through the loop.
+        self.screen.fill(self.settings.bg_color)
+        self.ship.blitme()
+
+        #make the most recently drawn screen visible
+        pygame.display.flip()
 
 #programm execution 
 if __name__ == '__main__':
