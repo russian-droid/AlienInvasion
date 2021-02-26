@@ -1,4 +1,5 @@
-#The pygame module contains the functionality we need to make a game
+
+#The pygame module con­tains the functionality we need to make a game
 import pygame
 #we’ll use tools in the sys to exit the game when the player quits
 import sys
