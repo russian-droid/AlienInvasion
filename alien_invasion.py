@@ -1,5 +1,5 @@
 
-#The pygame module con­tains the functionality we need to make a game
+#The pygame module contains the functionality we need to make a game
 import pygame
 #we’ll use tools in the sys to exit the game when the player quits
 import sys
@@ -14,7 +14,7 @@ class AlienInvasion:
         """ Initialize the game, and create game resources """
         pygame.init()
         self.settings = Settings()
-
+        
         #create a display window, on which we’ll draw all the game’s graphical ele­ments
         #We assign this dis­play window to the attribute self.screen , so it will be available in all methods in the class.
         #this object is called surface, it reps the entire game window
@@ -43,18 +43,27 @@ class AlienInvasion:
                 sys.exit()
             #watching for keydown events
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RIGHT:
-                    # Move the ship to the right.
-                    self.ship.moving_right = True
-                elif event.key == pygame.K_LEFT:
-                    self.ship.moving_left = True
-
-
+                self._check_keydown_events(event)
             elif event.type == pygame.KEYUP:
-                if event.key == pygame.K_RIGHT:
-                    self.ship.moving_right = False
-                elif event.key == pygame.K_LEFT:
-                    self.ship.moving_left = False
+                self._check_keyup_events(event)
+
+    def _check_keydown_events(self, event):
+        """Respond to keypresses."""
+        if event.key == pygame.K_RIGHT:
+            # Move the ship to the right.
+            self.ship.moving_right = True
+        elif event.key == pygame.K_LEFT:
+            self.ship.moving_left = True
+        #exit on Q
+        elif event.key == pygame.K_q:
+            sys.exit()
+
+    def _check_keyup_events(self, event):
+        """Respond to key releases."""
+        if event.key == pygame.K_RIGHT:
+            self.ship.moving_right = False
+        elif event.key == pygame.K_LEFT:
+            self.ship.moving_left = False
 
     def _update_screen(self):
         """ update images on the screen, and flip to the new screen """
