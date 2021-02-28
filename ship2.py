@@ -1,3 +1,5 @@
+#homework from that book
+
 import pygame
 
 class Ship:
