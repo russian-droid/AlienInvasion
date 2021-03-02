@@ -1,4 +1,3 @@
-
 #The pygame module contains the functionality we need to make a game
 import pygame
 #we’ll use tools in the sys to exit the game when the player quits
@@ -23,6 +22,9 @@ class AlienInvasion:
 
         #above we created a screen, now we can create an obj ship from imported class ship
         self.ship = Ship(self)
+
+        #bullets
+        self.bullets = pygame.sprite.Group()
 
         # Set the background color.
         self.bg_color = (230, 230, 230)
