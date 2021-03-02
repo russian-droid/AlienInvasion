@@ -1,11 +1,12 @@
-#The pygame module contains the functionality we need to make a game
+
+#The pygame module con­tains the functionality we need to make a game
 import pygame
 #we’ll use tools in the sys to exit the game when the player quits
 import sys
 
 from settings import Settings
-
 from ship import Ship
+from bullet import Bullet
 
 class AlienInvasion:
     """ Overall class to manage assets and behavior """
@@ -34,7 +35,14 @@ class AlienInvasion:
         while True:
             self._check_events()
             self.ship.update()
+            self.bullets.update()
             self._update_screen()
+
+            # Get rid of bullets that have disappeared.
+            for bullet in self.bullets.copy():
+                if bullet.rect.bottom <= 0:
+                    self.bullets.remove(bullet)
+            #print(len(self.bullets)) #just to check that bullets disappear
 
     def _check_events(self):
         """ Respond to keypresses and mouse events """
@@ -59,6 +67,8 @@ class AlienInvasion:
         #exit on Q
         elif event.key == pygame.K_q:
             sys.exit()
+        elif event.key == pygame.K_SPACE:
+            self._fire_bullet()
 
     def _check_keyup_events(self, event):
         """Respond to key releases."""
@@ -67,11 +77,18 @@ class AlienInvasion:
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = False
 
+    def _fire_bullet(self):
+        """Create a new bullet and add it to the bullets group."""
+        new_bullet = Bullet(self)
+        self.bullets.add(new_bullet)
+
     def _update_screen(self):
         """ update images on the screen, and flip to the new screen """
         # Redraw the screen during each pass through the loop.
         self.screen.fill(self.settings.bg_color)
         self.ship.blitme()
+        for bullet in self.bullets.sprites():
+            bullet.draw_bullet()
 
         #make the most recently drawn screen visible
         pygame.display.flip()
