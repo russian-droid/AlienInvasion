@@ -15,7 +15,7 @@ class Ship:
         self.rect = self.image.get_rect()
 
         #start each new ship at the bottom center of the screen
-        self.rect.center = self.screen_rect.center
+        self.rect.midleft = self.screen_rect.midleft
         #self.rect.midbottom = self.screen_rect.center
         """ 
         top, left, bottom, right
@@ -41,10 +41,6 @@ class Ship:
         """Update the ship's position based on the movement flag."""
         # Update the ship's x value, not the rect
         #stop when reached the edge of the screen
-        if self.moving_right and self.rect.right < self.screen_rect.right:
-            self.x += self.settings.ship_speed
-        if self.moving_left and self.rect.left > 0:
-            self.x -= self.settings.ship_speed
         if self.moving_up and self.rect.top > 0:
             self.y -= self.settings.ship_speed 
         if self.moving_down and self.rect.bottom < self.screen_rect.bottom:
