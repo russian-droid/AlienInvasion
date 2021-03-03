@@ -1,12 +1,11 @@
-
 #The pygame module con­tains the functionality we need to make a game
 import pygame
 #we’ll use tools in the sys to exit the game when the player quits
 import sys
 
 from settings import Settings
-from ship import Ship
-from bullet import Bullet
+from ship3 import Ship
+from bullet3 import Bullet
 
 class AlienInvasion:
     """ Overall class to manage assets and behavior """
@@ -19,7 +18,7 @@ class AlienInvasion:
         #We assign this dis­play window to the attribute self.screen , so it will be available in all methods in the class.
         #this object is called surface, it reps the entire game window
         self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height)) 
-        pygame.display.set_caption('Alien Invasion')
+        pygame.display.set_caption("vertical Invasion")
 
         #above we created a screen, now we can create an obj ship from imported class ship
         self.ship = Ship(self)
@@ -34,18 +33,8 @@ class AlienInvasion:
         """ Start the main loop for the game """
         while True:
             self._check_events()
-            self._update_bullets()
+            self.ship.update()
             self._update_screen()
-            
-    def _update_bullets(self):
-        """Update position of bullets and get rid of old bullets."""
-        # Update bullet positions.
-        self.bullets.update()
-        # Get rid of bullets that have disappeared.
-        for bullet in self.bullets.copy():
-            if bullet.rect.bottom <= 0:
-                self.bullets.remove(bullet)
-        #print(len(self.bullets)) #just to check that bullets disappear
 
     def _check_events(self):
         """ Respond to keypresses and mouse events """
@@ -54,7 +43,6 @@ class AlienInvasion:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
-            #watching for keydown events
             elif event.type == pygame.KEYDOWN:
                 self._check_keydown_events(event)
             elif event.type == pygame.KEYUP:
