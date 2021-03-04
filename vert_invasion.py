@@ -1,9 +1,15 @@
+""" 12-5. Keys: Make a Pygame file that creates an empty screen. In the event
+loop, print the event.key attribute whenever a pygame.KEYDOWN event is detected.
+Run the program and press various keys to see how Pygame responds. """
+
+
+
 #The pygame module con­tains the functionality we need to make a game
 import pygame
 #we’ll use tools in the sys to exit the game when the player quits
 import sys
 
-from settings import Settings
+from settings3 import Settings
 from ship3 import Ship
 from bullet3 import Bullet
 
@@ -18,7 +24,7 @@ class AlienInvasion:
         #We assign this dis­play window to the attribute self.screen , so it will be available in all methods in the class.
         #this object is called surface, it reps the entire game window
         self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height)) 
-        pygame.display.set_caption("vertical Invasion")
+        pygame.display.set_caption("UP down")
 
         #above we created a screen, now we can create an obj ship from imported class ship
         self.ship = Ship(self)
@@ -34,7 +40,18 @@ class AlienInvasion:
         while True:
             self._check_events()
             self.ship.update()
+            self._update_bullets()
             self._update_screen()
+
+    def _update_bullets(self):
+        """Update position of bullets and get rid of old bullets."""
+        # Update bullet positions.
+        self.bullets.update()
+        # Get rid of bullets that have disappeared.
+        for bullet in self.bullets.copy():
+            if bullet.rect.bottom <= 0:
+                self.bullets.remove(bullet)
+        #print(len(self.bullets)) #just to check that bullets disappear
 
     def _check_events(self):
         """ Respond to keypresses and mouse events """
@@ -43,6 +60,7 @@ class AlienInvasion:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
+            #watching for keydown events
             elif event.type == pygame.KEYDOWN:
                 self._check_keydown_events(event)
             elif event.type == pygame.KEYUP:
@@ -50,11 +68,15 @@ class AlienInvasion:
 
     def _check_keydown_events(self, event):
         """Respond to keypresses."""
-        if event.key == pygame.K_RIGHT:
+        #if event.key == pygame.K_RIGHT:
             # Move the ship to the right.
-            self.ship.moving_right = True
-        elif event.key == pygame.K_LEFT:
-            self.ship.moving_left = True
+            #self.ship.moving_right = True
+        #elif event.key == pygame.K_LEFT:
+            #self.ship.moving_left = True
+        if event.key == pygame.K_UP:#####
+            self.ship.moving_up = True
+        elif event.key == pygame.K_DOWN:#####
+            self.ship.moving_down = True
         #exit on Q
         elif event.key == pygame.K_q:
             sys.exit()
@@ -63,10 +85,14 @@ class AlienInvasion:
 
     def _check_keyup_events(self, event):
         """Respond to key releases."""
-        if event.key == pygame.K_RIGHT:
-            self.ship.moving_right = False
-        elif event.key == pygame.K_LEFT:
-            self.ship.moving_left = False
+        #if event.key == pygame.K_RIGHT:
+            #self.ship.moving_right = False
+        #elif event.key == pygame.K_LEFT:
+            #self.ship.moving_left = False
+        if event.key == pygame.K_UP:#####
+            self.ship.moving_up = False
+        elif event.key == pygame.K_DOWN:#####
+            self.ship.moving_down = False
 
     def _fire_bullet(self):
         """Create a new bullet and add it to the bullets group."""
