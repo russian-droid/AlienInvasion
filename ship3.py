@@ -1,34 +1,59 @@
 import pygame
-from pygame.sprite import Sprite
 
-#class inherits from Sprite , which we import from the pygame .sprite module.
-#When you use sprites, you can group related elements in your game and act on all the grouped elements at once.
-class Bullet(Sprite):
-    """A class to manage bullets fired from the ship"""
+class Ship:
+    """ a class to manage the ship """
 
     def __init__(self, ai_game):
-        """Create a bullet object at the ship's current position."""
-        super().__init__()
+        """ initialize the ship and set its starting position """
+        #assign the screen to an attribute of Ship , so we can access it easily in all the methods in this class
         self.screen = ai_game.screen
         self.settings = ai_game.settings
-        self.color = self.settings.bullet_color
+        self.screen_rect = ai_game.screen.get_rect()
 
-        # Create a bullet rect at (0, 0) and then set correct position.
-        #bullet is actually just a rect
-        #coordinates from top left corner
-        self.rect = pygame.Rect(0, 0, self.settings.bullet_width,self.settings.bullet_height)
-        self.rect.midtop = ai_game.ship.rect.midright
+        #load the ship image from a folder and get its rect
+        self.image = pygame.image.load('images/ship3.bmp')
+        self.rect = self.image.get_rect()
 
-        # Store the bullet's position as a decimal value.
+        #start each new ship at the bottom center of the screen
+        self.rect.midleft = self.screen_rect.midleft
+        #self.rect.midbottom = self.screen_rect.center
+        """ 
+        top, left, bottom, right
+        topleft, bottomleft, topright, bottomright
+        midtop, midleft, midbottom, midright
+        center, centerx, centery
+        size, width, height 
+        """
+        # Store a decimal value for the ship's horizontal position.
+        self.x = float(self.rect.x)
         self.y = float(self.rect.y)
 
+        # Movement flag
+        self.moving_right = False
+        self.moving_left = False
+        self.moving_up = False
+        self.moving_down = False
+
+        # Ship settings
+        self.ship_speed = 1.5
+
     def update(self):
-        """Move the bullet RIGHT the screen."""
-        # Update the decimal position of the bullet.
-        self.y -= self.settings.bullet_speed
-        # Update the rect position.
+        """Update the ship's position based on the movement flag."""
+        # Update the ship's x value, not the rect
+        #stop when reached the edge of the screen
+        if self.moving_right and self.rect.right < self.screen_rect.right:
+            self.x += self.settings.ship_speed
+        if self.moving_left and self.rect.left > 0:
+            self.x -= self.settings.ship_speed
+        if self.moving_up and self.rect.top > 0:
+            self.y -= self.settings.ship_speed 
+        if self.moving_down and self.rect.bottom < self.screen_rect.bottom:
+            self.y += self.settings.ship_speed
+
+        # Update rect object from self.x.
+        self.rect.x = self.x
         self.rect.y = self.y
 
-    def draw_bullet(self):
-        """Draw the bullet to the screen."""
-        pygame.draw.rect(self.screen, self.color, self.rect)
+    def blitme(self):
+        """ Draw the ship at this current location on screen """
+        self.screen.blit(self.image, self.rect)
