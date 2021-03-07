@@ -8,6 +8,8 @@ from settings import Settings
 from ship import Ship
 from bullet import Bullet
 from alien import Alien
+from random import randint
+
 
 class AlienInvasion:
     """ Overall class to manage assets and behavior """
@@ -57,8 +59,11 @@ class AlienInvasion:
         """Create an alien and place it in the row."""
         # Create an alien and place it in the row, it will count from this one.
         alien = Alien(self)
+        random_number = randint(0, 10)
         alien_width, alien_height = alien.rect.size
-        alien.x = alien_width + 2 * alien_width * alien_number
+        #try to build stars randomly
+        alien.x = alien_width + 2 * alien_width * random_number
+        #alien.x = alien_width + 2 * alien_width * alien_number
         alien.rect.x = alien.x
         alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_number
         self.aliens.add(alien)
