@@ -49,8 +49,10 @@ class AlienInvasion:
         self.bullets.update()
         # Get rid of bullets that have disappeared.
         for bullet in self.bullets.copy():
-            #when the rect (bullet) leaves screen (1200), it will be deleted
-            if bullet.rect.left >= 1200:
+            #when the rect (bullet) leaves screen, it will be deleted
+            if bullet.rect.left >= self.settings.screen_width:
+            #or a static version
+            #if bullet.rect.left >= 1200:
                 self.bullets.remove(bullet)
         #print(len(self.bullets)) #just to check that bullets disappear
 
