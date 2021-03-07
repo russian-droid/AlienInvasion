@@ -1,6 +1,10 @@
-#homework from that book
+""" 12-5. Keys: Make a Pygame file that creates an empty screen. In the event
+loop, print the event.key attribute whenever a pygame.KEYDOWN event is detected.
+Run the program and press various keys to see how Pygame responds. """
 
-#The pygame module contains the functionality we need to make a game
+
+
+#The pygame module con­tains the functionality we need to make a game
 import pygame
 #we’ll use tools in the sys to exit the game when the player quits
 import sys
@@ -20,7 +24,7 @@ class AlienInvasion:
         #We assign this dis­play window to the attribute self.screen , so it will be available in all methods in the class.
         #this object is called surface, it reps the entire game window
         self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height)) 
-        pygame.display.set_caption("IGOR's Invasion")
+        pygame.display.set_caption("right LEFT up DOWN")
 
         #above we created a screen, now we can create an obj ship from imported class ship
         self.ship = Ship(self)
