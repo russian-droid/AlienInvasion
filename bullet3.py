@@ -20,14 +20,15 @@ class Bullet(Sprite):
         self.rect.midtop = ai_game.ship.rect.midright
 
         # Store the bullet's position as a decimal value.
+        self.x = 0
         self.y = float(self.rect.y)
 
     def update(self):
         """Move the bullet RIGHT the screen."""
         # Update the decimal position of the bullet.
-        self.y += self.settings.bullet_speed
-        # Update the rect position.
-        self.rect.x = self.y
+        self.x += self.settings.bullet_speed
+        # Update the rect position (flying bullet)
+        self.rect.x = self.x
 
     def draw_bullet(self):
         """Draw the bullet to the screen."""
