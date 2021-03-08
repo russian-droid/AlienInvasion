@@ -4,10 +4,10 @@ import pygame
 #we’ll use tools in the sys to exit the game when the player quits
 import sys
 
-from settings import Settings
+from settings4 import Settings
 from ship import Ship
 from bullet import Bullet
-from alien import Alien
+from alien4 import Alien
 
 class AlienInvasion:
     """ Overall class to manage assets and behavior """
@@ -20,7 +20,7 @@ class AlienInvasion:
         #We assign this dis­play window to the attribute self.screen , so it will be available in all methods in the class.
         #this object is called surface, it reps the entire game window
         self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height)) 
-        pygame.display.set_caption('Alien Invasion')
+        pygame.display.set_caption('Rain Invasion')
 
         #above we created a screen, now we can create an obj ship from imported class ship
         self.ship = Ship(self)
@@ -90,18 +90,22 @@ class AlienInvasion:
         self._check_fleet_edges()
         self.aliens.update()
 
-    def _check_fleet_edges(self):
-        """Respond appropriately if any aliens have reached an edge."""
-        for alien in self.aliens.sprites():
-            if alien.check_edges():
-                self._change_fleet_direction()
-                break
+def _check_fleet_edges(self):
+    """Respond appropriately if any aliens have reached an edge."""
+    for alien in self.aliens.sprites():
+        if alien.check_edges():
+            #after touching the bottom, create a new fleet
+            self._create_fleet()
+            #self._change_fleet_direction()
+            break
     
+    '''
     def _change_fleet_direction(self):
         """Drop the entire fleet and change the fleet's direction."""
         for alien in self.aliens.sprites():
             alien.rect.y += self.settings.fleet_drop_speed
         self.settings.fleet_direction *= -1
+    '''
 
     def _check_events(self):
         """ Respond to keypresses and mouse events """
@@ -146,7 +150,7 @@ class AlienInvasion:
         """ update images on the screen, and flip to the new screen """
         # Redraw the screen during each pass through the loop.
         self.screen.fill(self.settings.bg_color)
-        self.ship.blitme()
+        #self.ship.blitme()
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
         #make an alien
