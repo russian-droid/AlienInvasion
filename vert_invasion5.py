@@ -12,9 +12,10 @@ import pygame
 #we’ll use tools in the sys to exit the game when the player quits
 import sys
 
-from settings3 import Settings
-from ship3 import Ship
-from bullet3 import Bullet
+from settings5 import Settings
+from ship5 import Ship
+from bullet5 import Bullet
+from alien5 import Alien
 
 class AlienInvasion:
     """ Overall class to manage assets and behavior """
