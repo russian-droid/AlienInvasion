@@ -1,10 +1,11 @@
 """ 
-12-6. Sideways Shooter: Write a game that places a ship on the left side of the
-screen and allows the player to move the ship up and down. Make the ship fire
-a bullet that travels right across the screen when the player presses the space-
-bar. Make sure bullets are deleted once they disappear off the screen. 
+13-5. Sideways Shooter Part 2: We’ve come a long way since Exercise 12-6,
+Sideways Shooter. For this exercise, try to develop Sideways Shooter to the
+same point we’ve brought Alien Invasion to. Add a fleet of aliens, and make
+them move sideways toward the ship. Or, write code that places aliens at ran-
+dom positions along the right side of the screen and then sends them toward
+the ship. Also, write code that makes the aliens disappear when they’re hit.
 """
-
 
 
 #The pygame module con­tains the functionality we need to make a game
