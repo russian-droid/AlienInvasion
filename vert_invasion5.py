@@ -81,6 +81,7 @@ class AlienInvasion:
         alien.x = alien_width + 2 * alien_width * alien_number
         #so they don't overlap the ship
         alien.rect.x = alien.x + 10*ship_width
+        alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_number
         self.aliens.add(alien)
 
     def _update_bullets(self):
